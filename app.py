@@ -64,28 +64,28 @@ def index():
             except Exception as e:
                 return render_template('index.html', summary=None, error=f"Error processing file: {str(e)}")
 
-if __name__ == '__main__':
-    app.run(debug=True)
-import plotly.graph_objs as go
-import plotly.io as pio
-import base64
-from io import BytesIO
+    if __name__ == '__main__':
+        app.run(debug=True)
+    import plotly.graph_objs as go
+    import plotly.io as pio
+    import base64
+    from io import BytesIO
 # Optional: ensure 'Date' column is datetime
-if 'Date' in df.columns:
-    df['Date'] = pd.to_datetime(df['Date'])
+    if 'Date' in df.columns:
+        df['Date'] = pd.to_datetime(df['Date'])
 
 # Create line chart using Plotly
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=df['Date'], y=df['Revenue'], mode='lines+markers', name='Revenue'))
-fig.add_trace(go.Scatter(x=df['Date'], y=df['Profit'], mode='lines+markers', name='Profit'))
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Revenue'], mode='lines+markers', name='Revenue'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Profit'], mode='lines+markers', name='Profit'))
 
-fig.update_layout(title='Revenue and Profit Over Time', xaxis_title='Date', yaxis_title='Amount')
+    fig.update_layout(title='Revenue and Profit Over Time', xaxis_title='Date', yaxis_title='Amount')
 
 # Save plot as image and encode as base64
-img_bytes = fig.to_image(format="png")
-encoded_img = base64.b64encode(img_bytes).decode()
+    img_bytes = fig.to_image(format="png")
+    encoded_img = base64.b64encode(img_bytes).decode()
 
 # Add chart to data_summary
-data_summary['plot_url'] = f"data:image/png;base64,{encoded_img}"
+    data_summary['plot_url'] = f"data:image/png;base64,{encoded_img}"
 
 
